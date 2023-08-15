@@ -26,7 +26,6 @@ function servePhpApp(apiPort, phpIniSettings) {
         const processes = [];
         const result = yield (0, php_1.serveApp)(state_1.default.randomSecret, apiPort, phpIniSettings);
         processes.push(result.process);
-        processes.push((0, php_1.startQueueWorker)(state_1.default.randomSecret, apiPort, phpIniSettings));
         state_1.default.phpPort = result.port;
         yield (0, utils_1.appendCookie)();
         return processes;

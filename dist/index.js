@@ -127,6 +127,11 @@ class NativePHP {
             }
             let now = new Date();
             let delay = (60 - now.getSeconds()) * 1000 + (1000 - now.getMilliseconds());
+            const queueProcess = (0, server_1.startQueue)(apiPort.port, phpIniSettings);
+            if (queueProcess) {
+                console.log('Starting queue...');
+                phpProcesses.push(queueProcess);
+            }
             setTimeout(() => {
                 console.log("Running scheduler...");
                 (0, server_1.runScheduler)(apiPort.port, phpIniSettings);
