@@ -15,8 +15,6 @@ export async function servePhpApp(apiPort: number, phpIniSettings: object) {
   const result = await serveApp(state.randomSecret, apiPort, phpIniSettings);
   processes.push(result.process);
 
-  processes.push(startQueueWorker(state.randomSecret, apiPort, phpIniSettings));
-
   state.phpPort = result.port;
   await appendCookie();
 

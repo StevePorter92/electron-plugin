@@ -2,9 +2,9 @@ import type CrossProcessExports from 'electron'
 import { autoUpdater } from "electron-updater"
 import state from './server/state'
 import {electronApp, optimizer, is} from '@electron-toolkit/utils'
-import {startAPI, runScheduler, servePhpApp, serveWebsockets, retrieveNativePHPConfig, retrievePhpIniSettings} from './server'
+import {startAPI, runScheduler, servePhpApp, serveWebsockets, retrieveNativePHPConfig, retrievePhpIniSettings, startQueue} from './server'
 import {notifyLaravel} from "./server/utils";
-import { app, BrowserWindow } from "electron";
+import { app } from "electron";
 import { resolve } from "path";
 import ps from 'ps-node'
 
@@ -146,6 +146,13 @@ class NativePHP {
 
       let now = new Date();
       let delay = (60 - now.getSeconds()) * 1000 + (1000 - now.getMilliseconds());
+
+      const queueProcess = startQueue(apiPort.port, phpIniSettings)
+
+      if (queueProcess) {
+        console.log('Starting queue...');
+        phpProcesses.push(queueProcess);
+      }
 
       setTimeout(() => {
         console.log("Running scheduler...")
