@@ -1,4 +1,3 @@
-import { session } from "electron";
 import serveWebsockets from "./websockets";
 import startAPIServer, { APIProcess } from "./api";
 import {
