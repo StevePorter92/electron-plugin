@@ -149,6 +149,17 @@ function startScheduler(secret, apiPort, phpIniSettings = {}) {
     return callPhp(['artisan', 'schedule:run'], phpOptions, phpIniSettings);
 }
 
+function runArtisanCommand(command, secret, apiPort, phpIniSettings = {}) {
+  const env = getDefaultEnvironmentVariables(secret, apiPort);
+
+  const phpOptions = {
+      cwd: appPath,
+      env
+  };
+
+  return callPhp(['artisan', ...command], phpOptions, phpIniSettings);
+}
+
 function getPath(name: string) {
   try {
     // @ts-ignore
@@ -255,4 +266,4 @@ function serveApp(secret, apiPort, phpIniSettings): Promise<ProcessResult> {
     })
 }
 
-export {startQueueWorker, startScheduler, serveApp, getAppPath, retrieveNativePHPConfig, retrievePhpIniSettings}
+export {startQueueWorker, startScheduler, serveApp, getAppPath, retrieveNativePHPConfig, retrievePhpIniSettings, runArtisanCommand}

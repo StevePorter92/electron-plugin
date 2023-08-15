@@ -6,6 +6,7 @@ import {
   serveApp,
   retrieveNativePHPConfig,
   retrievePhpIniSettings,
+  runArtisanCommand,
 } from "./php";
 import { appendCookie } from "./utils";
 import state from "./state";
@@ -23,6 +24,10 @@ export async function servePhpApp(apiPort: number, phpIniSettings: object) {
 
 export function runScheduler(apiPort: number, phpIniSettings: object) {
   startScheduler(state.randomSecret, apiPort, phpIniSettings);
+}
+
+export function runCommand(command: string[], apiPort: number, phpIniSettings: object) {
+  return runArtisanCommand(command, state.randomSecret, apiPort, phpIniSettings);
 }
 
 export function startQueue(apiPort: number, phpIniSettings: object) {

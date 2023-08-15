@@ -2,7 +2,7 @@ import type CrossProcessExports from 'electron'
 import { autoUpdater } from "electron-updater"
 import state from './server/state'
 import {electronApp, optimizer, is} from '@electron-toolkit/utils'
-import {startAPI, runScheduler, servePhpApp, serveWebsockets, retrieveNativePHPConfig, retrievePhpIniSettings, startQueue} from './server'
+import {startAPI, runScheduler, servePhpApp, serveWebsockets, retrieveNativePHPConfig, retrievePhpIniSettings, startQueue, runCommand} from './server'
 import {notifyLaravel} from "./server/utils";
 import { app } from "electron";
 import { resolve } from "path";
@@ -151,6 +151,13 @@ class NativePHP {
 
       if (queueProcess) {
         console.log('Starting queue...');
+        phpProcesses.push(queueProcess);
+      }
+
+      const socketProcess = runCommand(['socket:work'], apiPort.port, phpIniSettings)
+
+      if (socketProcess) {
+        console.log('Starting Socket Process...');
         phpProcesses.push(queueProcess);
       }
 
