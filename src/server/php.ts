@@ -24,7 +24,7 @@ async function getPhpPort() {
 
 async function retrievePhpIniSettings() {
   const env = {
-    NATIVEPHP_RUNNING: true,
+    NATIVEPHP_RUNNING: 'true',
     NATIVEPHP_STORAGE_PATH: storagePath,
     NATIVEPHP_DATABASE_PATH: databaseFile,
   };
@@ -39,7 +39,7 @@ async function retrievePhpIniSettings() {
 
 async function retrieveNativePHPConfig() {
     const env = {
-        NATIVEPHP_RUNNING: true,
+        NATIVEPHP_RUNNING: 'true',
         NATIVEPHP_STORAGE_PATH: storagePath,
         NATIVEPHP_DATABASE_PATH: databaseFile,
     };
