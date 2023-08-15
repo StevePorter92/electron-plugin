@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.retrievePhpIniSettings = exports.retrieveNativePHPConfig = exports.serveWebsockets = exports.startAPI = exports.startQueue = exports.runScheduler = exports.servePhpApp = void 0;
+exports.retrievePhpIniSettings = exports.retrieveNativePHPConfig = exports.serveWebsockets = exports.startAPI = exports.startQueue = exports.runCommand = exports.runScheduler = exports.servePhpApp = void 0;
 const websockets_1 = __importDefault(require("./websockets"));
 exports.serveWebsockets = websockets_1.default;
 const api_1 = __importDefault(require("./api"));
@@ -36,6 +36,10 @@ function runScheduler(apiPort, phpIniSettings) {
     (0, php_1.startScheduler)(state_1.default.randomSecret, apiPort, phpIniSettings);
 }
 exports.runScheduler = runScheduler;
+function runCommand(command, apiPort, phpIniSettings) {
+    return (0, php_1.runArtisanCommand)(command, state_1.default.randomSecret, apiPort, phpIniSettings);
+}
+exports.runCommand = runCommand;
 function startQueue(apiPort, phpIniSettings) {
     if (!process.env.NATIVE_PHP_SKIP_QUEUE) {
         return (0, php_1.startQueueWorker)(state_1.default.randomSecret, apiPort, phpIniSettings);

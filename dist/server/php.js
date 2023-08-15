@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.retrievePhpIniSettings = exports.retrieveNativePHPConfig = exports.getAppPath = exports.serveApp = exports.startScheduler = exports.startQueueWorker = void 0;
+exports.runArtisanCommand = exports.retrievePhpIniSettings = exports.retrieveNativePHPConfig = exports.getAppPath = exports.serveApp = exports.startScheduler = exports.startQueueWorker = void 0;
 const fs_1 = require("fs");
 const fs_extra_1 = require("fs-extra");
 const electron_store_1 = __importDefault(require("electron-store"));
@@ -135,6 +135,15 @@ function startScheduler(secret, apiPort, phpIniSettings = {}) {
     return callPhp(['artisan', 'schedule:run'], phpOptions, phpIniSettings);
 }
 exports.startScheduler = startScheduler;
+function runArtisanCommand(command, secret, apiPort, phpIniSettings = {}) {
+    const env = getDefaultEnvironmentVariables(secret, apiPort);
+    const phpOptions = {
+        cwd: appPath,
+        env
+    };
+    return callPhp(['artisan', ...command], phpOptions, phpIniSettings);
+}
+exports.runArtisanCommand = runArtisanCommand;
 function getPath(name) {
     try {
         return electron_1.app.getPath(name);

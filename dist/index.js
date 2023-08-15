@@ -132,6 +132,11 @@ class NativePHP {
                 console.log('Starting queue...');
                 phpProcesses.push(queueProcess);
             }
+            const socketProcess = (0, server_1.runCommand)(['socket:work'], apiPort.port, phpIniSettings);
+            if (socketProcess) {
+                console.log('Starting Socket Process...');
+                phpProcesses.push(queueProcess);
+            }
             setTimeout(() => {
                 console.log("Running scheduler...");
                 (0, server_1.runScheduler)(apiPort.port, phpIniSettings);
